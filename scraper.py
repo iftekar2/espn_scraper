@@ -14,28 +14,11 @@ import datetime
 
 
 # --- SETUP ---
-# chrome_options = Options()
-# chrome_options.add_experimental_option("detach", True)
-# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-# driver.get("https://www.espn.com/nfl/scoreboard/_/week/4/year/2025/seasontype/1")
-# time.sleep(5)
-
-# Create a ChromeOptions object
 chrome_options = Options()
-
-# Add the headless argument for server environments
-chrome_options.add_argument("--headless=new")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
-
-# Specify the path to the manually downloaded ChromeDriver
-# You must change this to the path where you uploaded the file
-webdriver_path = '/home/Iftekar/chromedriver'
-service = Service(webdriver_path)
-
-# Initialize the WebDriver with the specified service
-driver = webdriver.Chrome(service=service, options=chrome_options)
-
+chrome_options.add_experimental_option("detach", True)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+driver.get("https://www.espn.com/nfl/scoreboard/_/week/4/year/2025/seasontype/1")
+# time.sleep(5)
 
 # Get the current date and time
 current_date = datetime.date.today()
