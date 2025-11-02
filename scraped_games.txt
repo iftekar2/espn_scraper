@@ -10,3 +10,8 @@ colts-chargers
 commanders-cowboys
 packers-cardinals
 steelers-bengals
+vikings-chargers
+dolphins-falcons
+49ers-texans
+giants-eagles
+bills-panthers

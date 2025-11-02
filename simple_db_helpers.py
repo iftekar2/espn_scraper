@@ -9,16 +9,16 @@ def extract_game_id_from_url(url):
 def insert_live_game(game_data):
     """Insert or update live game data"""
     try:
-        # Check if game already exists in live_games
-        existing = supabase.table("live_games").select("id").eq("team_one_name", game_data['team_one_name']).eq("team_two_name", game_data['team_two_name']).execute()
+        # Check if game already exists in live_nfl_games
+        existing = supabase.table("live_nfl_games").select("id").eq("team_one_name", game_data['team_one_name']).eq("team_two_name", game_data['team_two_name']).execute()
         
         if existing.data:
             # Update existing live game
-            result = supabase.table("live_games").update(game_data).eq("id", existing.data[0]['id']).execute()
+            result = supabase.table("live_nfl_games").update(game_data).eq("id", existing.data[0]['id']).execute()
             print(f"Updated live game: {game_data['team_one_name']} vs {game_data['team_two_name']}")
         else:
             # Insert new live game
-            result = supabase.table("live_games").insert(game_data).execute()
+            result = supabase.table("live_nfl_games").insert(game_data).execute()
             print(f"Inserted new live game: {game_data['team_one_name']} vs {game_data['team_two_name']}")
         return True
     except Exception as e:
@@ -26,14 +26,14 @@ def insert_live_game(game_data):
         return False
 
 def move_game_to_final(game_data):
-    """Move game from live_games to final_games"""
+    """Move game from live_nfl_games to final_games"""
     try:
         # Insert into final_games
         result = supabase.table("final_games").insert(game_data).execute()
         print(f"Moved game to final: {game_data['team_one_name']} vs {game_data['team_two_name']}")
         
-        # Remove from live_games
-        supabase.table("live_games").delete().eq("team_one_name", game_data['team_one_name']).eq("team_two_name", game_data['team_two_name']).execute()
+        # Remove from live_nfl_games
+        supabase.table("live_nfl_games").delete().eq("team_one_name", game_data['team_one_name']).eq("team_two_name", game_data['team_two_name']).execute()
         print(f"Removed from live games: {game_data['team_one_name']} vs {game_data['team_two_name']}")
         
         return True
@@ -68,7 +68,7 @@ def create_game_data_dict(team_one_logo, team_one_name, team_one_score, team_one
                          team_one_total_turnovers, team_two_total_turnovers, team_one_first_downs, 
                          team_two_first_downs, team_one_penalties, team_two_penalties, team_one_third_down, 
                          team_two_third_down, team_one_forth_down, team_two_forth_down, team_one_red_zone, 
-                         team_two_red_zone, team_one_possession, team_two_possession):
+                         team_two_red_zone, team_one_possession, team_two_possession, game_status):
     """Create a dictionary with all the game data"""
     return {
         "team_one_logo": team_one_logo,
@@ -142,5 +142,6 @@ def create_game_data_dict(team_one_logo, team_one_name, team_one_score, team_one
         "team_one_red_zone": team_one_red_zone,
         "team_two_red_zone": team_two_red_zone,
         "team_one_possession": team_one_possession,
-        "team_two_possession": team_two_possession
+        "team_two_possession": team_two_possession, 
+        "game_status": game_status,
     }

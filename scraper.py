@@ -21,7 +21,7 @@ from simple_db_helpers import (
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-driver.get("https://www.espn.com/nfl/scoreboard/_/week/7/year/2025/seasontype/2")
+driver.get("https://www.espn.com/nfl/scoreboard/_/week/8/year/2025/seasontype/2")
 time.sleep(5)
 
 # --- CSV SETUP ---
@@ -199,6 +199,19 @@ try:
                             print(f"Team 1 Name: {team_one_name}")
 
                     try:
+                        full_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div/div[5]/div[1]/div/div/div[1]/div/a/span[1]").text
+                        team_one_last_name = full_name.split()[-1] 
+                        print(f"Team 1 Last Name: {team_one_last_name}")
+                    except NoSuchElementException:
+                        try:
+                            full_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div[2]/div[5]/div[1]/div/div/div[1]/div/a/span[2]").text
+                            team_one_last_name = full_name.split()[-1]
+                            print(f"Team 1 Last Name: {team_one_last_name}")
+                        except NoSuchElementException:
+                            team_one_last_name = "N/A"
+                            print(f"Team 1 Last Name: {team_one_last_name}")
+
+                    try:
                         # First attempt: Try to find the element using the first XPath
                         team_one_score = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div/div[5]/div[2]/div[1]").text
                         print(f"Team 1 Score: {team_one_score}")
@@ -252,6 +265,19 @@ try:
                             # Final fallback: If both XPaths failed, set the variable to "N/A"
                             team_two_name = "N/A"
                             print(f"Team 2 Name: {team_two_name}")
+
+                    try:
+                        full_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div/div[7]/div[1]/div/div/div[1]/div/a/span[1]").text
+                        team_two_last_name = full_name.split()[-1] 
+                        print(f"Team 1 Last Name: {team_two_last_name}")
+                    except NoSuchElementException:
+                        try:
+                            full_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div[2]/div[7]/div[1]/div/div/div[1]/div/a/span[1]").text
+                            team_two_last_name = full_name.split()[-1]
+                            print(f"Team 1 Last Name: {team_two_last_name}")
+                        except NoSuchElementException:
+                            team_two_last_name = "N/A"
+                            print(f"Team 1 Last Name: {team_two_last_name}")
 
                     try:
                         # First attempt: Try to find the element using the first XPath
@@ -1346,6 +1372,20 @@ try:
                             team_one_name = "N/A"
                             print(f"Team 1 Name: {team_one_name}")
 
+                    # try:
+                    #     full_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div[1]/div[5]/div[1]/div/div/div[1]/div/a/span[1]").text
+                    #     team_two_last_name = full_name.split()[-1] 
+                    #     print(f"Team 1 Last Name: {team_two_last_name}")
+                    # except NoSuchElementException:
+                    #     try:
+                    #         full_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div[1]/div[5]/div[1]/div/div/div[1]/div/a/span[2]").text
+                    #         team_two_last_name = full_name.split()[-1]
+                    #         print(f"Team 1 Last Name: {team_two_last_name}")
+                    #     except NoSuchElementException:
+                    #         team_two_last_name = "N/A"
+                    #         print(f"Team 1 Last Name: {team_two_last_name}")
+
+
                     try:
                         # First attempt: Try to find the element using the first XPath
                         team_one_score = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[1]/div[1]/div/div[1]/div[5]/div[2]/div[1]").text
@@ -1968,7 +2008,7 @@ try:
                             print(f"Team 1 receiving Yard: {team_one_player_one_sacks}")
 
                     try:
-                        team_two_image_element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[4]/div/div/div[1]/picture/img")
+                        team_two_image_element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[4]/a[2]/div/div[1]/picture/img")
                         full_image_url = team_two_image_element.get_attribute('src') 
                         team_two_sacks_player_image = full_image_url.split('&', 1)[0]
                         print(f"Team 2 receiving Yard Player Image: {team_two_sacks_player_image}")
@@ -1984,7 +2024,7 @@ try:
 
                     try:
                         # First attempt: Try to find the element using the first XPath
-                        team_two_sacks_player_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[3]/div/div[2]/section[4]/a[2]/div/div[2]/div[1]/div/span[1]").text
+                        team_two_sacks_player_name = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[4]/a[2]/div/div[2]/div[1]/div/span[1]").text
                         print(f"Team 2 receiving Yard player Name: {team_two_sacks_player_name}")
                     except NoSuchElementException:
                         try:
@@ -1998,7 +2038,7 @@ try:
 
                     try:
                         # First attempt: Try to find the element using the first XPath
-                        team_two_sacks_player_position = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[3]/div/div[2]/section[4]/a[2]/div/div[2]/div[1]/div/span[2]").text
+                        team_two_sacks_player_position = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[4]/a[2]/div/div[2]/div[1]/div/span[2]").text
                         print(f"Team 2 receiving Yard player Position: {team_two_sacks_player_position}")
                     except NoSuchElementException:
                         try:
@@ -2012,7 +2052,7 @@ try:
 
                     try:
                         # First attempt: Try to find the element using the first XPath
-                        team_two_player_two_sacks = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[3]/div/div[2]/section[4]/a[2]/div/div[2]/div[2]/span").text
+                        team_two_player_two_sacks = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[4]/a[2]/div/div[2]/div[2]/span").text
                         print(f"Team 2 Player two receiving Yard: {team_two_player_two_sacks}")
                     except NoSuchElementException:
                         try:
@@ -2180,12 +2220,12 @@ try:
 
                     try:
                         # First attempt: Try to find the element using the first XPath
-                        team_one_total_yards = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[5]/a[2]/div/div[2]/div[2]/span").text
+                        team_one_total_yards = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div[3]/section/div[2]/div[1]/p[1]/span").text
                         print(f"Team 1 Total Yards: {team_one_total_yards}")
                     except NoSuchElementException:
                         try:
                             # Second attempt: If the first XPath failed, try the second two
-                            team_one_total_yards = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[3]/div/div[2]/section[5]/a[2]/div/div[2]/div[2]/span").text
+                            team_one_total_yards = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div[3]/section/div[2]/div[1]/p[1]/span").text
                             print(f"Team 1 Total Yards: {team_one_total_yards}")
                         except NoSuchElementException:
                             # Final fallback: If both XPaths failed, set the variable to "N/A"
@@ -2461,7 +2501,7 @@ try:
                             team_one_total_turnovers, team_two_total_turnovers, team_one_first_downs,
                             team_two_first_downs, team_one_penalties, team_two_penalties, team_one_third_down,
                             team_two_third_down, team_one_forth_down, team_two_forth_down, team_one_red_zone,
-                            team_two_red_zone, team_one_possession, team_two_possession
+                            team_two_red_zone, team_one_possession, team_two_possession, game_status
                         )
                         
                         # Insert/update live game
@@ -2481,9 +2521,11 @@ try:
                                 team_two_rushing_yard_player_image,team_two_rushing_yard_player_name,team_two_rushing_yard_player_position,team_two_rushing_yard_player_game_state,team_two_player_two_rushing_yard,
                                 team_one_receiving_yard_player_image,team_one_receiving_yard_player_name,team_one_receiving_yard_player_position,team_one_receiving_yard_player_game_state,team_one_player_one_receiving_yard,
                                 team_two_receiving_yard_player_image,team_two_receiving_yard_player_name,team_two_receiving_yard_player_position,team_two_receiving_yard_player_game_state,team_two_player_two_receiving_yard,
-                                team_one_sacks_player_image,team_one_sacks_player_name,team_one_sacks_player_position,team_one_player_one_sacks,team_two_sacks_player_image,team_two_sacks_player_name,team_two_sacks_player_position,team_two_player_two_sacks,
-                                team_one_tackles_player_image,team_one_tackles_player_name,team_one_tackles_player_position,team_one_tackles_player_game_state,team_one_player_one_tackles,team_two_tackles_player_image,team_two_tackles_player_name,team_two_tackles_player_position,team_two_tackles_player_game_state,team_two_player_two_tackles, 
-                                team_one_total_yards,team_two_total_yards,team_one_total_turnovers,team_two_total_turnovers,team_one_first_downs,team_two_first_downs,team_one_penalties,team_two_penalties,team_one_third_down,team_two_third_down,team_one_forth_down,team_two_forth_down,team_one_red_zone,team_two_red_zone,team_one_possession,team_two_possession
+                                team_one_sacks_player_image,team_one_sacks_player_name,team_one_sacks_player_position,team_one_player_one_sacks,team_two_sacks_player_image,team_two_sacks_player_name,
+                                team_two_sacks_player_position,team_two_player_two_sacks,team_one_tackles_player_image,team_one_tackles_player_name,team_one_tackles_player_position,team_one_tackles_player_game_state,
+                                team_one_player_one_tackles,team_two_tackles_player_image,team_two_tackles_player_name,team_two_tackles_player_position,team_two_tackles_player_game_state,team_two_player_two_tackles, 
+                                team_one_total_yards,team_two_total_yards,team_one_total_turnovers,team_two_total_turnovers,team_one_first_downs,team_two_first_downs,team_one_penalties,team_two_penalties,team_one_third_down,
+                                team_two_third_down,team_one_forth_down,team_two_forth_down,team_one_red_zone,team_two_red_zone,team_one_possession,team_two_possession, game_status
                                 ]
                     live_csv_writer.writerow(live_data)
                     driver.back()
