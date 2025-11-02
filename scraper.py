@@ -21,7 +21,7 @@ from simple_db_helpers import (
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-driver.get("https://www.espn.com/nfl/scoreboard/_/week/8/year/2025/seasontype/2")
+driver.get("https://www.espn.com/nfl/scoreboard/_/week/9/year/2025/seasontype/2")
 time.sleep(5)
 
 # --- CSV SETUP ---
@@ -1805,13 +1805,13 @@ try:
                     print("--------------------------------\n")
 
                     try:
-                        team_one_image_element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[3]/div/div[2]/section[3]/a[1]/div/div[1]/picture/img")
+                        team_one_image_element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[3]/a[1]/div/div[1]/picture/img")
                         full_image_url = team_one_image_element.get_attribute('src') 
                         team_one_receiving_yard_player_image = full_image_url.split('&', 1)[0]
                         print(f"Team 2 receiving Yard Player Image: {team_one_receiving_yard_player_image}")
                     except NoSuchElementException:
                         try:
-                            team_one_image_element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[3]/div/div[2]/section[3]/a[1]/div/div[1]/picture/img")
+                            team_one_image_element = driver.find_element(By.XPATH, "/html/body/div[1]/div/div/div/div/main/div[2]/div/div[2]/div/div[2]/div[2]/div/div/section[4]/div/div[2]/section[3]/a[1]/div/div[1]/picture/img")
                             full_image_url = team_one_image_element.get_attribute('src')
                             team_one_receiving_yard_player_image = full_image_url.split('&', 1)[0]
                             print(f"Team 2 receiving Yard Player Image: {team_one_receiving_yard_player_image}")
